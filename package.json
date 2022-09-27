@@ -9,16 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "mockjs": "^1.1.0",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/mockjs": "^1.0.7",
     "@types/node": "18.7.23",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
     "eslint": "8.24.0",
     "eslint-config-next": "12.3.1",
+    "postcss": "^8.3.3",
+    "sass": "^1.55.0",
+    "stylelint": "^14.12.1",
+    "stylelint-config-standard-scss": "^5.0.0",
     "typescript": "4.8.3"
   }
 }
