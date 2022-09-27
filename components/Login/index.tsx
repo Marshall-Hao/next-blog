@@ -1,10 +1,10 @@
 import { ChangeEvent, useState } from 'react';
 
+import {message} from 'antd'
 
 import styles from './index.module.scss'
-
 import CountDown from 'components/CountDown'
-
+import request from 'services/fetch'
 interface IProps {
     isShow: boolean
     onClose: Function
@@ -33,7 +33,20 @@ const Login = (props: IProps) => {
   }
 
   const handleGetVerifyCode = () => {
-    setIsShowVerifyCode(true)
+    if (!form?.phone) {
+      message.warning('请输入手机号')
+    }
+
+    request.post('/api/user/sendVerifyCode',{
+      to: form?.phone,
+      templateId:1
+    }).then((res:any) => {
+      if (res?.code === 0) {
+        setIsShowVerifyCode(true)
+      } else {
+        message.error(res?.msg || '未知错误')
+      }
+    })
   }
 
   const handleLogin = () => {
