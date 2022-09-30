@@ -12,8 +12,8 @@ export default withIronSessionApiRoute(login, ironOptions);
 async function login(req: NextApiRequest, res: NextApiResponse) {
   const session: ISession = req.session;
   const { phone = '', verify = '', identity_type = 'phone' } = req.body;
+  if (!AppDataSource.isInitialized) await AppDataSource.initialize();
   try {
-    await AppDataSource.initialize();
     const userRepo = AppDataSource.getRepository(User);
     const userAuthRepo = AppDataSource.getRepository(UserAuth);
     const allUsers = await userRepo.find();
