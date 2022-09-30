@@ -1,11 +1,11 @@
-import { Entity , Column, PrimaryColumn, ManyToOne, JoinColumn} from 'typeorm';
+import { Entity , Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn} from 'typeorm';
 import {User} from './user';
 
 @Entity("user_auths")
 
 export class UserAuth {
-  @PrimaryColumn()
-  readonly id!: number
+  @PrimaryGeneratedColumn()
+  id!: number
 
   @Column()
   identity_type!: string
@@ -17,8 +17,9 @@ export class UserAuth {
   credential!: string
 
   @ManyToOne(() => User,{
+    // * 会自动保存user
     cascade: true,
   })
-  @JoinColumn({name:'uder_id'})
+  @JoinColumn({name:'user_id'})
   user!: User
 }
