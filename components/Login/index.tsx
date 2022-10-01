@@ -69,7 +69,9 @@ const Login = (props: IProps) => {
   }
 
   const handleOAuthGithub = () => {
-
+    const githubId = '12eba916f013a34ac4c1';
+    const redirect_uri = 'http://localhost:3000/api/oauth/redirect'
+    window.open(`https://github.com/login/oauth/authorize?client_id=${githubId}&redirect_uri=${redirect_uri}`)
   }
 
   const handleCountDownEnd = () => {
