@@ -2,6 +2,8 @@ import { ChangeEvent, useState } from 'react';
 
 import {message} from 'antd'
 
+import { useStore } from 'store';
+
 import styles from './index.module.scss'
 import CountDown from 'components/CountDown'
 import request from 'services/fetch'
@@ -14,12 +16,13 @@ const Login = (props: IProps) => {
   const {isShow,onClose} = props
 
   const [isShowVerifyCode,setIsShowVerifyCode] = useState(false)
-
   const [form,setForm] = useState({
     phone:'',
     verify: ''
   })
+  const store = useStore()
 
+  console.log(store)
   const handleClose = () => {
     onClose()
   }
@@ -56,7 +59,7 @@ const Login = (props: IProps) => {
     }).then((res:any) =>{
       if (res?.code === 0) {
         // success
-
+        store.user.setUserInfo(res.data)
         onClose && onClose()
       } else {
         message.error(res?.msg || '未知错误')

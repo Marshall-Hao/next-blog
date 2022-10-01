@@ -1,14 +1,37 @@
 import '../styles/globals.css';
-import type { AppProps } from 'next/app';
-import Layout from 'components/layout';
+import { StoreProvider } from 'store';
 
-function MyApp({ Component, pageProps }: AppProps) {
+import Layout from 'components/layout';
+import { NextPage } from 'next';
+
+interface IProps {
+  initialValue: Record<any, any>;
+  Component: NextPage;
+  pageProps: any;
+}
+function MyApp({ initialValue, Component, pageProps }: IProps) {
   return (
-    // @ts-ignore
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <StoreProvider initialValue={initialValue}>
+      {/* @ts-ignore */}
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </StoreProvider>
   );
 }
+
+MyApp.getInitialProps = async ({ ctx }: any) => {
+  console.log('-------cookies--------');
+  const { userId, nickname, avatar } = ctx?.req?.cookies || {};
+  return {
+    initialValue: {
+      userInfo: {
+        userId,
+        nickname,
+        avatar,
+      },
+    },
+  };
+};
 
 export default MyApp;
