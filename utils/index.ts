@@ -25,3 +25,22 @@ export const setCooKie = (
     expires,
   });
 };
+
+export const clearCookie = (cookies: any) => {
+  // 24h 登录时效
+  const expires = 0;
+  const path = '/';
+
+  cookies.set('userId', '', {
+    path,
+    expires,
+  });
+  cookies.set('nickname', '', {
+    path,
+    expires,
+  });
+  cookies.set('avatar', '', {
+    path,
+    expires,
+  });
+};

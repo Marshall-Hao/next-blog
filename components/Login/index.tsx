@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 
 import {message} from 'antd'
 
@@ -116,4 +117,4 @@ const Login = (props: IProps) => {
   ): null;
 };
 
-export default Login;
+export default observer(Login);

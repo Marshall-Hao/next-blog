@@ -7,6 +7,9 @@ interface IProps {
   children: ReactElement
 }
 
+// * 只有 在非浏览器 状况 不会去 监听更新 只第一遍刷新
+enableStaticRendering(!process.browser)
+
 const StoreContext = createContext({})
 
 export const StoreProvider = ({initialValue,children}: IProps) => {
