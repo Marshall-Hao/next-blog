@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { Button, Dropdown, Avatar, Menu } from 'antd';
+import { Button, Dropdown, Avatar, Menu, message } from 'antd';
 import { HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 
 import { useStore } from 'store';
@@ -17,13 +17,19 @@ import request from 'services/fetch';
 import Login from 'components/Login';
 
 const NavBar: NextPage = () => {
-  const { pathname } = useRouter();
+  const { pathname, push } = useRouter();
   const [isShowLogin, setIsShowLogin] = useState(false);
   const store = useStore();
 
   const { userId, avatar } = store.user.userInfo;
 
-  const handleGotoEditPage = () => {};
+  const handleGotoEditPage = () => {
+    if (userId) {
+      push('/editor/new');
+    } else {
+      message.warning('请先登录');
+    }
+  };
   const handleLogin = () => {
     setIsShowLogin(true);
   };
@@ -35,7 +41,9 @@ const NavBar: NextPage = () => {
     return <Menu items={menuItems}></Menu>;
   };
 
-  const handleGoToProfile = () => {};
+  const handleGoToProfile = () => {
+    push(`/user/${userId}`);
+  };
 
   const handleLogOut = () => {
     request.post('/api/user/logout').then((res: any) => {
