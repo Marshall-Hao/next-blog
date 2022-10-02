@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne,JoinColumn} from 'typeorm';
-import {User} from './user';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne,JoinColumn ,OneToMany} from 'typeorm';
+import {User, Comment} from './index';
 
 @Entity("articles")
 
@@ -32,4 +32,6 @@ export class Article {
   @JoinColumn({name:'user_id'})
   user!: User
 
+  @OneToMany(() => Comment, (comment: any) => comment.article)
+  comments!: Comment[]
 }

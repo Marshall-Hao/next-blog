@@ -12,3 +12,10 @@ export const EXCEPTION_ARTICLE = {
     msg: '未找到',
   },
 };
+
+export const EXCEPTION_COMMENT = {
+  COMMENT_FAILED: {
+    code: 2001,
+    msg: '评论错误',
+  },
+};
