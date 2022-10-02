@@ -10,7 +10,7 @@ interface IProps {
   articles: IArticle[];
 }
 
-const Home = (props: IProps) => {
+const Home: NextPage<IProps> = (props: IProps) => {
   const { articles } = props;
   console.log(articles);
   return (
@@ -29,7 +29,7 @@ const Home = (props: IProps) => {
 
 export default Home;
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   if (!AppDataSource.isInitialized) await AppDataSource.initialize();
   const articleRepo = await AppDataSource.getRepository(Article);
   const articles = await articleRepo.find({
