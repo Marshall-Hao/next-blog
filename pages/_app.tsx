@@ -10,16 +10,19 @@ interface IProps {
   pageProps: any;
 }
 function MyApp({ initialValue, Component, pageProps }: IProps) {
+  // @es-ignore
+  const noLayout = Object.prototype.hasOwnProperty.call(Component, 'noLayout');
+  console.log(noLayout);
   const renderLayout = () => {
-    if ((Component as any).layout === null) {
+    if (noLayout) {
       return <Component {...pageProps} />;
     } else {
-      {
+      return (
         /* @ts-ignore */
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>;
-      }
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      );
     }
   };
 
