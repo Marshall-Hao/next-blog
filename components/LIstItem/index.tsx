@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { EyeOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import markdownToTxt from 'markdown-to-txt';
 
 import { IArticle } from 'pages/api';
 import styles from './index.module.scss';
@@ -26,10 +27,10 @@ const ListItem = (props: IProps) => {
             </span>
           </div>
           <h4 className={styles.title}>{article?.title}</h4>
-          <p className={styles.content}>{article?.content}</p>
+          <p className={styles.content}>{markdownToTxt(article?.content)}</p>
           <div className={styles.statistics}>
             <EyeOutlined />
-            <span>{article?.views}</span>
+            <span>&nbsp;{article?.views}</span>
           </div>
         </div>
         <Avatar src={user?.avatar} size={48} />
