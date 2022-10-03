@@ -1,3 +1,10 @@
+export const EXCEPTION_USER = {
+  NOT_LOGIN: {
+    code: 1001,
+    msg: '用户未登录',
+  },
+};
+
 export const EXCEPTION_ARTICLE = {
   PUBLISH_FAILED: {
     code: 2001,
@@ -13,9 +20,16 @@ export const EXCEPTION_ARTICLE = {
   },
 };
 
+export const EXCEPTION_TAG = {
+  FOLLOW_FAILED: {
+    code: 3001,
+    msg: '操作失败',
+  },
+};
+
 export const EXCEPTION_COMMENT = {
   COMMENT_FAILED: {
-    code: 2001,
+    code: 4001,
     msg: '评论错误',
   },
 };
