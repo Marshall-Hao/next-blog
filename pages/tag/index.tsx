@@ -93,15 +93,6 @@ const Tag: NextPage = () => {
     </div>)
   }
 
-  const isFind = (tag,userId) => {
-    console.log('------------------------')
-    console.log(tag?.users?.find((user: any) => {
-      console.log(Number(user.id), Number(userId) )
-      console.log(Number(user.id) === Number(userId))
-      return Number(user?.id) === Number(userId)
-    }))
-  }
-
 
   const AllContent:() => ReactNode = () => {
     return (<div className={styles.tag}>

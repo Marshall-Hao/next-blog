@@ -3,6 +3,10 @@ export const EXCEPTION_USER = {
     code: 1001,
     msg: '用户未登录',
   },
+  NOT_FOUND: {
+    code: 1002,
+    msg: '用户未找到',
+  },
 };
 
 export const EXCEPTION_ARTICLE = {

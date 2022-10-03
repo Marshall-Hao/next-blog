@@ -39,7 +39,7 @@ async function follow(req: NextApiRequest, res: NextApiResponse) {
 
   if (tag?.users) {
     if (type === 'follow') {
-      tag.users = tag?.users?.concat([user]);
+      tag.users = tag?.users?.concat([user as User]);
       tag.follow_count = tag?.follow_count + 1;
     } else if (type === 'unfollow') {
       tag.users = tag?.users?.filter((user) => user.id !== userId);

@@ -38,6 +38,7 @@ export async function getServerSideProps() {
     },
   });
 
+  console.log('------------again--------------');
   return {
     props: {
       articles: JSON.parse(JSON.stringify(articles)) || [],

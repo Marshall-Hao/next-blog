@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { Input, Button, message, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import request from 'services/fetch';
 import { useStore } from 'store';
@@ -16,15 +16,29 @@ const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 const NewEditor: NextPage = () => {
   const [content, setContent] = useState('**Hello world!!!**');
   const [title, setTitle] = useState('');
+  const [allTags,setAllTags] = useState([]);
+  const [tagIds,setTagIds] = useState([]);
+
   const { push } = useRouter()
   const store = useStore()
   const { userId } = store.user.userInfo
+
+  useEffect(() => {
+    request.get('/api/tag/get').then((res: any) => {
+      if (res?.code === 0) {
+        console.log(res?.data?.allTags)
+        setAllTags(res?.data?.allTags || [])
+      }
+    })
+  }, []);
 
   const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event?.target?.value);
   };
 
-  const handleSelectTag = () => {};
+  const handleSelectTag = (value:[]) => {
+    setTagIds(value)
+  };
 
   const handlePublish = () => {
     if (!title) {
@@ -33,7 +47,8 @@ const NewEditor: NextPage = () => {
     } 
     request.post('/api/article/publish', {
       title,
-      content
+      content,
+      tagIds
     }).then((res: any) => {
       if (res?.code === 0) {
         message.success('发布成功')
@@ -64,7 +79,11 @@ const NewEditor: NextPage = () => {
           allowClear
           placeholder="请选择标签"
           onChange={handleSelectTag}
-        ></Select>
+        >
+         {allTags?.map((tag: any) => (
+          <Select.Option key={tag?.id} value={tag?.id}>{tag?.title}</Select.Option>
+        ))}
+        </Select>
         <Button
           className={styles.button}
           type="primary"

@@ -11,7 +11,7 @@ import { Article } from 'db/entities';
 import { IArticle } from 'pages/api';
 
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState,useEffect } from 'react';
 import styles from './index.module.scss';
 import request from 'services/fetch';
 import { useStore } from 'store';
@@ -28,17 +28,30 @@ const ModifyEditor: NextPage<IProps> = (props:IProps) => {
 
   const [content, setContent] = useState(article.content || '');
   const [title, setTitle] = useState(article.title || '');
+  const [allTags,setAllTags] = useState([]);
+  const [tagIds,setTagIds] = useState([]);
   const { push, query } = useRouter()
   const articleId = Number(query.id)
 
   const store = useStore()
   const { userId } = store.user.userInfo
 
+  useEffect(() => {
+    request.get('/api/tag/get').then((res: any) => {
+      if (res?.code === 0) {
+        console.log(res?.data?.allTags)
+        setAllTags(res?.data?.allTags || [])
+      }
+    })
+  }, []);
+
   const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event?.target?.value);
   };
 
-  const handleSelectTag = () => {};
+  const handleSelectTag = (value:[]) => {
+    setTagIds(value)
+  };
 
   const handleUpdate = () => {
     if (!title) {
@@ -48,7 +61,8 @@ const ModifyEditor: NextPage<IProps> = (props:IProps) => {
     request.post('/api/article/update', {
       title,
       content,
-      articleId
+      articleId,
+      tagIds
     }).then((res: any) => {
       if (res?.code === 0) {
         message.success('编辑成功')
@@ -79,7 +93,11 @@ const ModifyEditor: NextPage<IProps> = (props:IProps) => {
           allowClear
           placeholder="请选择标签"
           onChange={handleSelectTag}
-        ></Select>
+        >
+          {allTags?.map((tag: any) => (
+          <Select.Option key={tag?.id} value={tag?.id}>{tag?.title}</Select.Option>
+        ))}
+        </Select>
         <Button
           className={styles.button}
           type="primary"

@@ -18,7 +18,7 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
       users: true,
     },
   });
-  console.log('-------------------------------');
+  console.log('-----------all--------------------');
   console.log(allTags);
   const followTags = await tagRepo
     .createQueryBuilder('tag')
@@ -27,7 +27,7 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
       id: Number(userId),
     })
     .getMany();
-  console.log('-------------------------------');
+  console.log('--------------follow-----------------');
   console.log(followTags);
   res?.status(200)?.json({
     code: 0,

@@ -17,7 +17,7 @@ const AppDataSource = new DataSource({
   password,
   database,
   entities: [User, UserAuth, Article, Comment, Tag],
-  synchronize: true,
+  synchronize: false,
   logging: false,
 });
 
