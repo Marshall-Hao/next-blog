@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne,JoinColumn ,OneToMany} from 'typeorm';
-import {User, Comment} from './index';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne,JoinColumn ,OneToMany,ManyToMany} from 'typeorm';
+import {User, Comment, Tag} from './index';
 
 @Entity("articles")
 
@@ -34,4 +34,9 @@ export class Article {
 
   @OneToMany(() => Comment, (comment: any) => comment.article)
   comments!: Comment[]
+
+  @ManyToMany(() => Tag, (tag) => tag.articles, {
+    cascade: true
+  })
+  tags!: Tag[]
 }

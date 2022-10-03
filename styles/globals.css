@@ -10,3 +10,8 @@ body {
   background-color: #fff;
   padding: 20px;
 }
+
+.tag {
+  display: flex;
+  justify-content: flex-start;
+}
